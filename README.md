@@ -1,6 +1,6 @@
 # vueBlog
-##myapp express+mysql写的后端
-##vueblog是用vue+vue-router+vuex+element ui写的前端
+## myapp express+mysql写的后端
+## vueblog是用vue+vue-router+vuex+element ui写的前端
 - 登录
 ![login](https://github.com/xiaobaidechengzhang/vueBlog/blob/master/vueblog/src/assets/login.gif)
 - 主页和博客内容展示
