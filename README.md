@@ -1,6 +1,7 @@
 # vueBlog
 ## myapp express+mysql写的后端
 ## vueblog是用vue+vue-router+vuex+element ui写的前端
+* 知识点包括jwt,vue全家桶,数据库增删改查，多表联查，多表删除，markdown，语法高亮
 - 登录
 ![login](https://github.com/xiaobaidechengzhang/vueBlog/blob/master/vueblog/src/assets/login.gif)
 - 主页和博客内容展示
