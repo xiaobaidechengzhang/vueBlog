@@ -2,7 +2,7 @@
 ## `myapp` `express`+`mysql`写的后端
 ## vueblog是用`vue`+`vue-router`+`vuex`+`element ui`写的前端
 ###更新
-- ts重构 vue打包
+- `ts`重构 `vue.config.js`打包
 - `mysqpp`文件夹 
 -       npm run start 
 - `vueblog`文件夹
