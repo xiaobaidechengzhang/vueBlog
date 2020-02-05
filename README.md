@@ -3,12 +3,12 @@
 ## vueblog是用vue+vue-router+vuex+element ui写的前端
 ###更新
 - ts重构 vue打包
-- mysqpp文件夹 
+- `mysqpp`文件夹 
 -       npm run start 
-- vueblog文件夹
+- `vueblog`文件夹
  -      npm run build 
-    即可在dis文件夹中index.html查看效果
-* 知识点包括jwt,vue全家桶,数据库增删改查，多表联查，多表删除，markdown，语法高亮
+    即可在`dis`文件夹中`index.html`查看效果
+* 知识点包括`jwt`,`vue全家桶`,数据库增删改查，多表联查，多表删除，markdown，语法高亮
 - 登录
 ![login](https://github.com/xiaobaidechengzhang/vueBlog/blob/master/vueblog/src/assets/login.gif)
 - 主页和博客内容展示
