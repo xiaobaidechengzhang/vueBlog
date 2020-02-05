@@ -4,9 +4,9 @@
 ###更新
 - ts重构 vue打包
 - mysqpp文件夹 
-    npm run start 
+-       npm run start 
 - vueblog文件夹
-    npm run build 
+ -      npm run build 
     即可在dis文件夹中index.html查看效果
 * 知识点包括jwt,vue全家桶,数据库增删改查，多表联查，多表删除，markdown，语法高亮
 - 登录
