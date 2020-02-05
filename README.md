@@ -1,6 +1,6 @@
 # vueBlog
-## myapp express+mysql写的后端
-## vueblog是用vue+vue-router+vuex+element ui写的前端
+## `myap`p `express`+`mysql`写的后端
+## vueblog是用`vue`+`vue-router`+`vuex`+`element ui`写的前端
 ###更新
 - ts重构 vue打包
 - `mysqpp`文件夹 
