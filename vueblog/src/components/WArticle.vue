@@ -9,50 +9,54 @@
 		<div id='content' class='hljs'></div>
 	</div>
 </template>
-<script>
-	import { mapGetters } from 'vuex'
-	import marked from 'marked'
-	import hjs from 'highlight.js'
-	import javascript from 'highlight.js/lib/languages/javascript'
-	import 'highlight.js/styles/github.css'
-	export default {
-		name: 'WArticle',
-		data () {
-			return {
-				titleA: '',
-				articleA:''
-			}
-		},
-		computed: {
-			...mapGetters('user',{
-				userInfo:'getUserInfo'
-			})
-		},
-		methods: {
-			publishA() {
-				this.$emit('toIndex1','1');
-				let data = {
-					name: this.userInfo.name,
-					article: this.titleA,
-					des: this.articleA
-				}
-				this.axios.post('http://localhost:3000/userdetail/title', data)
-				  .then((res) => {
-					
-				    this.$router.push({path: '/'});
-					this.$message('发表成功');
-				  })
-				  .catch((err) => {
-				    console.log(err)
-				  })
-				 
-			},
-			cancelP() {
-				
-				this.$router.push({path: '/'});
-				this.$message('取消发表');
-			}
-		}
+
+<script lang="ts">
+	import http from '../utils/util'
+	import { Component, Vue } from 'vue-property-decorator'
+	import { State, namespace } from 'vuex-class'
+	const userModule = namespace('user')
+	
+	@Component
+	export default class WArticle extends Vue {
+		private titleA: String = ''
+		private articleA: String = ''
 		
+		//State
+		@userModule.State userInfo: any
+		
+		//methods
+		genID(length: number){
+			//生成唯一id
+			return Number(Math.random().toString().substr(3,length) + Date.now()).toString(36);
+		}
+		publishA() {
+			this.$emit('toIndex1','1');
+			let onlyId = this.genID(20);
+			console.log(this.userInfo.userId+':'+this.userInfo.userName);
+			let data = {
+				articleId:onlyId,
+				articleUserId: this.userInfo.userId,
+				articleUserName: this.userInfo.userName,
+				articleTitle: this.titleA,
+				articleContent: this.articleA,
+				articleCreateTime: '2019-11-04-10:20',
+				articleUpdateTime: '2019-11-04-10:20'
+			}
+			http.post('http://localhost:3000/userdetail/title', data)
+			  .then((res) => {
+				
+			    this.$router.push({path: '/'});
+				this.$message('发表成功');
+			  })
+			  .catch((err) => {
+			    console.log(err)
+			  })
+			 
+		}
+		cancelP() {
+			
+			this.$router.push({path: '/'});
+			this.$message('取消发表');
+		}
 	}
 </script>

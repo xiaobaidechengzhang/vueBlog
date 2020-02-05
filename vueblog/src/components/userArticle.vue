@@ -2,102 +2,104 @@
 	<div>
 		<el-row>
 			<el-col :span='24'>
-				<div v-for="(item,index) in results" :key=item.id class='singleArt'
+				<div v-for="(item,index) in results" :key=item.article_id class='singleArt'
 						>
 					<el-button id='deleteA' type='info' style='float: right;'
-							@click='deleteArticle(item.id,item.name)'>删除</el-button>
-					<h2><router-link :to="{name:'Article',params:{id:item.id,name:item.name}}">{{item.article}}</router-link></h2>
-					<p id='des'><router-link :to="{name:'Article',params:{id:item.id,name:item.name}}">{{item.des}}</router-link></p>
-					<span style='float: right;font-size:15px'>2019-09-12</span>
+							@click='deleteArticle(item.article_id, item.article_user_id, item.article_user_name)'>删除</el-button>
+					<h2><router-link :to="{name:'Article',params:{id:item.article_id,userId:item.article_user_id,userName:item.article_user_name}}">{{item.article_title}}</router-link></h2>
+					<p id='des'><router-link :to="{name:'Article',params:{id:item.article_id,userId:item.article_user_id, userName:item.article_user_name}}">{{item.article_content}}</router-link></p>
+					<span style='float: right;font-size:15px'>{{item.article_update_tiem}}</span>
 				</div>
 			</el-col>
 			<el-col :span='24' v-show='!results.length' style='margin-top: 20px;text-align: center;'>尚无文章发表</el-col>
 		</el-row>
 	</div>
 </template>
-<script>
-	import { mapGetters } from 'vuex'
-	export default {
-		name:'UserArticle',
-		data () {
-			return {
-				results:[]
-			}
-		},
-		computed: {
-			...mapGetters('user',{
-				userInfo: 'getUserInfo'
-			})
-		},
-		methods: {
-			
-			queryArticle () {
-			  let data = {
-			    params: {
-			      name: this.userInfo.name
-			    }
-			  }
-			  
-			  this.axios.get('http://localhost:3000/userdetail/info', data)
-			    .then(res => {
-					if(res.data.length){
-						this.results = res.data.reverse();
-					}
-					else{
-						if(this.userInfo.isLogin){
-							this.$message('尚无文章发表')
-						}
-						
-					}
-					
-			    })
-			    .catch(err => {
-			      console.error(err)
-			    })
-			},
-			deleteArticle(id,name) {
-				this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
-							confirmButtonText: '确定',
-							cancelButtonText: '取消',
-							type: 'warning'
-					}).then(() => {
-						this.delete(id,name);
-						
-					}).catch(() => {
-						this.$message({
-						type: 'info',
-						message: '已取消删除'
-					});          
-				});
-			},
-			delete(artId,userName) {
-				let data = {
-					params: {
-						id: artId,
-						name: userName
-					}
+
+<script lang="ts">
+	import http from '../utils/util'
+	import { State, namespace } from 'vuex-class'
+	const userModule = namespace('user')
+	import { Component, Vue } from 'vue-property-decorator'
+	import { Query_Article_Data, Delete_Article_Data } from '../types/types'
+	@Component
+	export default class UserArticle extends Vue {
+		private results:Array<object> = []
+		
+		@userModule.State userInfo: any
+		
+		//mehtods
+		queryArticle () {
+		  
+		  let data: Query_Article_Data = {
+		    params: {
+		      articleUserId: this.userInfo.userId,
+					articleUserName: this.userInfo.userName
+		    }
+		  }			  
+		  http.get('http://localhost:3000/userdetail/info', data)
+		    .then((res: any) => {
+		    	console.log('query: '+res)
+				if(res.data.length){
+					this.results = res.data.reverse();
 				}
-				this.axios.get('http://localhost:3000/userdetail/delete', data)
-					.then((res) => {
-						let item = this.results.find(item => item.id === artId);
-						this.results.splice(item,1);
-						this.$message({
-							type: 'success',
-							message: '删除成功!'
-						});
-					}).
-					catch((err) => {
-						console.log(err);
-					})
+				else{
+					this.$message('尚无文章发表')
+				
+				}
+				
+		    })
+		    .catch((err: any) => {
+		      console.error(err)
+		
+		    })
+		}
+		deleteArticle(artId: string, userId: string, userName: string) {
+			this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+						confirmButtonText: '确定',
+						cancelButtonText: '取消',
+						type: 'warning'
+				}).then(() => {
+					this.delete(artId,userId,userName);
+					
+				}).catch(() => {
+					this.$message({
+					type: 'info',
+					message: '已取消删除'
+				});          
+			});
+		}
+		delete(artId: string | number, userId: string, userName: string) {
+			let data: Delete_Article_Data = {
+				params: {
+					articleId: artId,
+					articleUserId: userId,
+					articleUserName: userName
+				}
 			}
-		},
+			http.get('http://localhost:3000/userdetail/delete', data)
+				.then((res: any) => {
+					let index: number = this.results.findIndex((item: any) => item.article_id === artId);
+					console.log(index);
+					this.results.splice(index,1);
+					this.$message({
+						type: 'success',
+						message: '删除成功!'
+					});
+				}).
+				catch((err: any) => {
+					console.log(err);
+				})
+		}
+		
 		mounted () {
-			console.log('mount home : '+this.userInfo.name)
+			//console.log('mount home : '+this.userInfo.userName);
 			this.queryArticle();
 		}
 	}
 </script>
-<style>
+
+<style scoped lang="less">
 	.singleArt {
 		margin:20px;
 		padding: 20px;
@@ -115,5 +117,4 @@
 		-webkit-line-clamp: 2;
 		overflow: hidden;
 	}
-	
 </style>
