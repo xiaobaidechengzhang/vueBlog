@@ -1,4 +1,4 @@
-# vue_ts_example
+# vueblog
 
 ## Project setup
 ```
