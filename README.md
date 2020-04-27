@@ -10,7 +10,7 @@
     即可在`dis`文件夹中`index.html`查看效果
 * 知识点包括`jwt`,`vue全家桶`,数据库增删改查，多表联查，多表删除，markdown，语法高亮
 - 登录
-![login](https://github.com/xiaobaidechengzhang/vueBlog/blob/master/vueblog/src/assets/login.gif)
+![login](https://github.com/xiaobaidechengzhang/vueBlog/blob/master/vueblog/src/assets/detail.gif)
 - 主页和博客内容展示
 ![detail](https://github.com/xiaobaidechengzhang/vueBlog/blob/master/vueblog/src/assets/detail.gif)
 - 编辑博客
